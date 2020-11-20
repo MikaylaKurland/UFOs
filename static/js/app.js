@@ -18,3 +18,20 @@ function buildTable(data) {
     });
 
 }
+
+//a function to filter the data table
+function handleClick() {
+    let date = d3.select("#datetime").property("value"); //select the first element that matches our selector string "#datetime" id in the HTML tags
+    //by chaining ".property("value") to the select function we are grabbing the information and holding it the "date" variable
+    let filteredData = tableData; //a default filter - just setting it to the original data table. "tableData" is the variable for the original data as imported from data.js
+    if (date) {
+        filteredData = filteredData.filter(row => row.datetime === date); //Show only the rows where the date is equal to the date filter we created above
+    };
+    // Rebuild the table using the filtered data with the "buildTable" function
+    // @NOTE: If no date was entered, then filteredData will just be the original tableData.
+    buildTable(filteredData);
+}
+
+d3.selectAll("#filter-btn").on("click", handleClick); // Attach an event to listen for the form button
+
+buildTable(tableData); //makes sure the basic table loads when the page does
